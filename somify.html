@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Smolify AI × KrackHack — Sovereign AI Challenge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --bg2: #0f0f1a;
+    --bg3: #13131f;
+    --card: #111120;
+    --border: #1e1e35;
+    --g-blue: #4285F4;
+    --g-red: #EA4335;
+    --g-yellow: #FBBC05;
+    --g-green: #34A853;
+    --accent: #00e5ff;
+    --accent2: #b388ff;
+    --text: #e8e8f0;
+    --text-dim: #6b6b8a;
+    --text-mid: #a0a0c0;
+    --mono: 'IBM Plex Mono', monospace;
+    --display: 'Syne', sans-serif;
+    --code: 'Space Mono', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--display);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ─── NOISE OVERLAY ─── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+
+  .page { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 0 24px 80px; }
+
+  /* ─── HERO ─── */
+  .hero {
+    padding: 64px 0 40px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; right: -120px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(66,133,244,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .gdg-bar {
+    display: flex; gap: 6px; margin-bottom: 32px;
+  }
+  .gdg-dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  .gdg-dot:nth-child(1) { background: var(--g-blue); animation-delay: 0s; }
+  .gdg-dot:nth-child(2) { background: var(--g-red); animation-delay: 0.2s; }
+  .gdg-dot:nth-child(3) { background: var(--g-yellow); animation-delay: 0.4s; }
+  .gdg-dot:nth-child(4) { background: var(--g-green); animation-delay: 0.6s; }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .hero-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--g-green);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .hero-tag::before {
+    content: '//';
+    color: var(--text-dim);
+  }
+
+  .hero h1 {
+    font-size: clamp(36px, 6vw, 64px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+
+  .hero h1 .smolify { color: var(--accent); }
+  .hero h1 .x { color: var(--text-dim); font-weight: 400; }
+  .hero h1 .krackhack { color: var(--text); }
+
+  .hero-sub {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--text-mid);
+    margin: 20px 0 28px;
+    line-height: 1.8;
+    max-width: 600px;
+  }
+  .hero-sub span { color: var(--accent2); }
+
+  .hero-badges {
+    display: flex; flex-wrap: wrap; gap: 10px;
+  }
+  .badge {
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 5px 12px;
+    border-radius: 4px;
+    border: 1px solid;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .badge-blue { border-color: var(--g-blue); color: var(--g-blue); background: rgba(66,133,244,0.08); }
+  .badge-green { border-color: var(--g-green); color: var(--g-green); background: rgba(52,168,83,0.08); }
+  .badge-yellow { border-color: var(--g-yellow); color: var(--g-yellow); background: rgba(251,188,5,0.08); }
+  .badge-red { border-color: var(--g-red); color: var(--g-red); background: rgba(234,67,53,0.08); }
+  .badge-cyan { border-color: var(--accent); color: var(--accent); background: rgba(0,229,255,0.08); }
+
+  /* ─── SECTION ─── */
+  .section-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin: 56px 0 24px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, var(--border), transparent);
+  }
+
+  /* ─── PROBLEM CARD ─── */
+  .ps-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 28px;
+    overflow: hidden;
+    position: relative;
+    transition: border-color 0.2s;
+  }
+  .ps-card:hover { border-color: rgba(66,133,244,0.35); }
+  .ps-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+  }
+  .ps-card.intermediate::before { background: var(--g-green); }
+  .ps-card.expert::before { background: var(--g-red); }
+  .ps-card.open::before { background: linear-gradient(180deg, var(--accent) 0%, var(--accent2) 100%); }
+
+  .ps-header {
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: flex-start; gap: 20px;
+  }
+
+  .ps-num {
+    font-family: var(--code);
+    font-size: 11px;
+    font-weight: 700;
+    width: 36px; height: 36px;
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .ps-card.intermediate .ps-num { background: rgba(52,168,83,0.15); color: var(--g-green); border: 1px solid rgba(52,168,83,0.3); }
+  .ps-card.expert .ps-num { background: rgba(234,67,53,0.15); color: var(--g-red); border: 1px solid rgba(234,67,53,0.3); }
+  .ps-card.open .ps-num { background: rgba(0,229,255,0.15); color: var(--accent); border: 1px solid rgba(0,229,255,0.3); }
+
+  .ps-header-info { flex: 1; }
+
+  .ps-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.3;
+    margin-bottom: 10px;
+  }
+
+  .ps-meta {
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .ps-tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 3px 9px;
+    border-radius: 3px;
+    letter-spacing: 0.04em;
+  }
+  .tag-track { background: rgba(66,133,244,0.12); color: #7baaf7; border: 1px solid rgba(66,133,244,0.2); }
+  .tag-domain { background: rgba(251,188,5,0.1); color: #fcd34d; border: 1px solid rgba(251,188,5,0.2); }
+  .tag-int { background: rgba(52,168,83,0.1); color: var(--g-green); border: 1px solid rgba(52,168,83,0.2); }
+  .tag-exp { background: rgba(234,67,53,0.1); color: #f87171; border: 1px solid rgba(234,67,53,0.2); }
+  .tag-open { background: rgba(0,229,255,0.1); color: var(--accent); border: 1px solid rgba(0,229,255,0.2); }
+
+  /* ─── PS BODY ─── */
+  .ps-body { padding: 0; }
+
+  .ps-section {
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .ps-section:last-child { border-bottom: none; }
+
+  .ps-section-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .ps-section-label .dot {
+    width: 5px; height: 5px; border-radius: 50%;
+  }
+  .dot-blue { background: var(--g-blue); }
+  .dot-green { background: var(--g-green); }
+  .dot-yellow { background: var(--g-yellow); }
+  .dot-red { background: var(--g-red); }
+  .dot-cyan { background: var(--accent); }
+  .dot-purple { background: var(--accent2); }
+
+  .ps-section p {
+    font-family: var(--code);
+    font-size: 12.5px;
+    color: var(--text-mid);
+    line-height: 1.7;
+  }
+  .ps-section p code {
+    background: rgba(255,255,255,0.06);
+    padding: 1px 6px;
+    border-radius: 3px;
+    color: var(--accent);
+    font-size: 11.5px;
+  }
+
+  .eval-list {
+    list-style: none;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .eval-list li {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-mid);
+    display: flex; gap: 10px; align-items: flex-start;
+    line-height: 1.5;
+  }
+  .eval-list li::before {
+    content: '›';
+    color: var(--g-green);
+    font-size: 14px;
+    flex-shrink: 0;
+    margin-top: -1px;
+  }
+
+  .bonus-row {
+    display: flex; gap: 10px; align-items: flex-start;
+  }
+  .bonus-icon {
+    font-size: 13px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .bonus-text {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--g-yellow);
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  /* ─── TERMINAL BLOCK ─── */
+  .terminal {
+    background: #080810;
+    border: 1px solid #1a1a2e;
+    border-radius: 8px;
+    margin: 40px 0;
+    overflow: hidden;
+  }
+  .terminal-bar {
+    background: #0f0f1e;
+    padding: 10px 16px;
+    display: flex; align-items: center; gap: 8px;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  .t-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .t-dot:nth-child(1) { background: #ff5f57; }
+  .t-dot:nth-child(2) { background: #febc2e; }
+  .t-dot:nth-child(3) { background: #28c840; }
+  .terminal-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-left: 8px;
+  }
+  .terminal-body {
+    padding: 20px 24px;
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 2;
+  }
+  .t-line { display: flex; gap: 10px; }
+  .t-prompt { color: var(--g-green); }
+  .t-cmd { color: var(--text); }
+  .t-out { color: var(--text-dim); padding-left: 20px; }
+  .t-key { color: var(--accent2); }
+  .t-val { color: var(--g-yellow); }
+
+  /* ─── GRID STATS ─── */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin: 40px 0;
+  }
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px 16px;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: var(--code);
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .stat-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  /* ─── FOOTER ─── */
+  .footer {
+    margin-top: 80px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: gap;
+    gap: 16px;
+  }
+  .footer-brand {
+    font-family: var(--code);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .footer-links {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+  .footer-links a { color: var(--text-dim); text-decoration: none; }
+  .footer-links a:hover { color: var(--accent); }
+
+  @media (max-width: 600px) {
+    .ps-header { flex-direction: column; gap: 12px; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="gdg-bar">
+      <div class="gdg-dot"></div>
+      <div class="gdg-dot"></div>
+      <div class="gdg-dot"></div>
+      <div class="gdg-dot"></div>
+    </div>
+    <div class="hero-tag">Sovereign AI Challenge · KrackHack Edition</div>
+    <h1>
+      <span class="smolify">Smolify.ai</span><br/>
+      <span class="x">×</span> <span class="krackhack">KrackHack</span>
+    </h1>
+    <p class="hero-sub">
+      Build models you <span>own</span>. Not API wrappers. Not toy projects.<br/>
+      Distill intelligence. Ship sovereign AI.
+    </p>
+    <div class="hero-badges">
+      <span class="badge badge-green">48-hour Hackathon</span>
+      <span class="badge badge-blue">GDG on Campus</span>
+      <span class="badge badge-yellow">₹1,00,000 Prize Pool</span>
+      <span class="badge badge-red">11 Problem Statements</span>
+      <span class="badge badge-cyan">SLM Track</span>
+    </div>
+  </header>
+
+  <!-- STATS -->
+  <!-- <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-num" style="color: var(--g-green)">11</div>
+      <div class="stat-label">Problem Statements</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" style="color: var(--g-blue)">6</div>
+      <div class="stat-label">Intermediate</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" style="color: var(--g-red)">4</div>
+      <div class="stat-label">Expert Level</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" style="color: var(--g-yellow)">₹1L</div>
+      <div class="stat-label">Max Prize Pool</div>
+    </div>
+  </div> -->
+
+  <!-- TERMINAL -->
+  <div class="terminal">
+    <div class="terminal-bar">
+      <div class="t-dot"></div><div class="t-dot"></div><div class="t-dot"></div>
+      <span class="terminal-title">smolify — bash — 80×24</span>
+    </div>
+    <div class="terminal-body">
+      <div class="t-line"><span class="t-prompt">$</span><span class="t-cmd"> smolify init sovereign-ai-challenge</span></div>
+      <div class="t-line"><span class="t-out">✔ Platform: <span style="color:var(--g-green)">Smolify Model Foundry</span></span></div>
+      <div class="t-line"><span class="t-out">✔ Track: <span style="color:var(--accent)">The Sovereign AI Challenge</span></span></div>
+      <div class="t-line"><span class="t-out">✔ Rule: <span style="color:var(--g-yellow)">Own the weights. Not the API key.</span></span></div>
+      <div class="t-line"><span class="t-out"><span class="t-key">problem_statements</span>: <span class="t-val">11 loaded</span></span></div>
+      <div class="t-line"><span class="t-prompt">$</span><span class="t-cmd"> smolify train --dataset synthetic --distill intelligence</span></div>
+      <div class="t-line"><span class="t-out" style="color:var(--g-green)">› Building your proprietary SLM...</span></div>
+    </div>
+  </div>
+
+  <!-- PROBLEM STATEMENTS -->
+  <div class="section-label">Problem Statements</div>
+
+  <!-- PS 01 -->
+  <div class="ps-card intermediate">
+    <div class="ps-header">
+      <div class="ps-num">01</div>
+      <div class="ps-header-info">
+        <div class="ps-title">Privacy-Preserving Contract Intelligence Engine</div>
+        <div class="ps-meta">
+          <!-- <span class="ps-tag tag-int">Intermediate</span> -->
+          <span class="ps-tag tag-track">NER + Structured Extraction</span>
+          <span class="ps-tag tag-domain">LegalTech / Enterprise</span>
+        </div>
+      </div>
+    </div>
+    <div class="ps-body">
+      <div class="ps-section">
+        <div class="ps-section-label"><span class="dot dot-red"></span>Problem</div>
+        <p>Law firms and corporate legal teams cannot send confidential contracts to cloud LLMs due to GDPR, attorney-client privilege, and data residency laws. Critical metadata — party names, liability clauses, jurisdiction, payment milestones — remains locked in unstructured PDFs.</p>
+      </div>
+      <div class="ps-section">
+        <div class="ps-section-label"><span class="dot dot-blue"></span>Challenge</div>
+        <p>Use Smolify to synthesize a contract dataset and train a compact NER + clause-extraction model that runs <code>on-device</code>. Output structured <code>JSON</code>: parties, dates, monetary values, obligations, governing law — with zero bytes leaving the user's machine.</p>
+      </div>
+      <div class="ps-section">
+        <div class="ps-section-label"><span class="dot dot-green"></span>Evaluation Criteria</div>
+        <ul class="eval-list">
+          <li>F1 score on held-out contract extraction benchmark</li>
+          <li>Inference under 500ms on a mid-range laptop CPU</li>
+          <li>Zero external API calls during inference</li>
+        </ul>
+      </div>
+      <div class="ps-section">
+        <div class="ps-section-label"><span class="dot dot-yellow"></span>Bonus</div>
+        <div class="bonus-row"><span class="bonus-icon">⚡</span><span class="bonus-text">Support multi-language contracts (Hindi + English code-mixed)</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PS 02 -->
+  <div class="ps-card intermediate">
+    <div class="ps-header">
+      <div class="ps-num">02</div>
+      <div class="ps-header-info">
+        <div class="ps-title">Intelligent Clinical Symptom Router</div>
+        <div class="ps-meta">
+          <!-- <span class="ps-tag tag-int">Intermediate</span> -->
+          <span class="ps-tag tag-track">Classification</span>
+          <span class="ps-tag tag-domain">HealthTech / Hospital Ops</span>
+        </div>
+      </div>
+    </div>
+    <div class="ps-body">
+      <div class="ps-section">
+        <div class="ps-section-label"><span class="dot dot-red"></span>Problem</div>
+        <p>OPDs in tier-2 Indian hospitals receive thousands of patient intake forms daily. Triage staff manually route patients to departments, causing bottlenecks. Sending raw patient data to cloud APIs violates India's DPDP Act.</p>
+      </div>
+      <div class="ps-section">
+        <div class="ps-section-label"><span class="dot dot-blue"></span>Challenge</div>
+        <p>Build a Smolify-trained classification model mapping free-text symptom descriptions to medical departments. Handle regional code-mixing (Hinglish), medical abbreviations, and multi-label outputs. e.g. <code>"chest tightness + cold sweat"</code> → <code>Cardiology</code></p>
+      </div>
+      <div class="ps-section">
+        <div class="ps-section-label"><span class="dot dot-green"></span>Evaluation Criteria</div>
+        <ul class="eval-list">
+          <li>Top-1 and Top-3 accuracy on multi-department test set</li>
+          <li>Latency under 200ms on Raspberry Pi 4</li>
+          <li>Graceful ambiguous input handling with confidence score output</li>
+        </ul>
+      </div>
+      <div class="ps-section">
+        <div class="ps-section-label"><span class="dot dot-yellow"></span>Bonus</div>
+        <div class="bonus-row"><span class="bonus-icon">⚡</span><span class="bonus-text">Integrate urgency scoring: Emergency / Urgent / Routine</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PS 03 -->
+  <div class="ps-card expert">
+    <div class="ps-header">
+      <div class="ps-num">03</div>
+      <div class="ps-header-info">
+        <div class="ps-title">COBOL-to-Python Migration Translator</div>
+        <div class="ps-meta">
+          <!-- <span class="ps-tag tag-exp">Expert</span> -->
+          <span class="ps-tag tag-track">Code Translation</span>
+          <span class="ps-tag tag-domain">FinTech / Legacy Modernization</span>
+        </div>
+      </div>
+    </div>
+    <div class="ps-body">
+      <div class="ps-section">
+        <div class="ps-section-label"><span class="dot dot-red"></span>Problem</div>
+        <p>Indian PSU banks run core banking on COBOL systems from the 1980s. General-purpose LLMs hallucinate COBOL-specific semantics (<code>COMPUTE</code>, <code>PERFORM UNTIL</code>, <code>COPYBOOKS</code>) and cannot be used with proprietary banking code.</p>
+      </div>
+      <div class="ps-section">
+        <div class="ps-section-label"><span class="dot dot-blue"></span>Challenge</div>
+        <p>Use Smolify to synthesize paired COBOL–Python datasets for financial computation patterns. Train a translation model producing syntactically correct, semantically equivalent Python that fully understands COBOL's fixed-format structure and data division blocks.</p>
+      </div>
+      <div class="ps-section">
+        <div class="ps-section-label"><span class="dot dot-green"></span>Evaluation Criteria</div>
+        <ul class="eval-list">
+          <li>Compilation success rate of all generated Python code</li>
+          <li>Semantic equivalence verified by unit test pass rate</li>
+          <li>Correct handling of: PICTURE clauses, PERFORM loops, COPYBOOKS</li>
+        </ul>
+      </div>
+      <div class="ps-section">
+        <div class="ps-section-label"><span class="dot dot-yellow"></span>Bonus</div>
+        <div class="bonus-row"><span class="bonus-icon">⚡</span><span class="bonus-text">Generate inline Python comments explaining the original COBOL logic</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PS 04 -->
+  <div class="ps-card intermediate">
+    <div class="ps-header">
+      <div class="ps-num">04</div>
+      <div class="ps-header-info">
+        <div class="ps-title">Edge IoT Natural Language Commander</div>
+        <div class="ps-meta">
+          <!-- <span class="ps-tag tag-int">Intermediate</span> -->
+          <span class="ps-tag tag-track">Structured Output</span>
+          <span class="ps-tag tag-domain">Smart Home / Industrial IoT</span>
+        </div>
+      </div>
+    </div>
+    <div class="ps-body">
+      <div class="ps-section">
+        <div class="ps-section-label"><span class="dot dot-red"></span>Problem</div>
+        <p>Voice assistants require cloud connectivity and have 300–800ms latency. Industrial edge hardware (Raspberry Pi, ESP32) demands models under 50MB, with custom sensor vocabularies cloud APIs can't handle.</p>
+      </div>
+      <div class="ps-section">
+        <div class="ps-section-label"><span class="dot dot-blue"></span>Challenge</div>
+        <p>Train a Smolify model converting natural language commands into deterministic JSON payloads. Handle negation, relative values (<code>"dim by 30%"</code>), multi-device commands, and unknown device fallbacks — producing zero hallucinated keys.</p>
+      </div>
+      <div class="ps-section">
+        <div class="ps-section-label"><span class="dot dot-green"></span>Evaluation Criteria</div>
+        <ul class="eval-list">
+          <li>JSON schema validity rate (must be 100% parseable)</li>
+          <li>Exact-match accuracy on command-to-JSON benchmark</li>
+          <li>Model size under 80MB for edge deployment</li>
+        </ul>
+      </div>
+      <div class="ps-section">
+        <div class="ps-section-label"><span class="dot dot-yellow"></span>Bonus</div>
+        <div class="bonus-row"><span class="bonus-icon">⚡</span><span class="bonus-text">Support custom device vocabulary via a config YAML at inference time</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PS 05 -->
+  <div class="ps-card expert">
+    <div class="ps-header">
+      <div class="ps-num">05</div>
+      <div class="ps-header-info">
+        <div class="ps-title">Financial Document Anomaly Detector</div>
+        <div class="ps-meta">
+          <!-- <span class="ps-tag tag-exp">Expert</span> -->
+          <span class="ps-tag tag-track">Classification + Reasoning</span>
+          <span class="ps-tag tag-domain">FinTech / Audit / Compliance</span>
+        </div>
+      </div>
+    </div>
+    <div class="ps-body">
+      <div class="ps-section">
+        <div class="ps-section-label"><span class="dot dot-red"></span>Problem</div>
+        <p>CA firms process thousands of invoices and purchase orders. Fraudulent documents contain subtle inconsistencies: GST mismatches, inflated unit prices, round-number bias, duplicate invoice IDs. Cloud AI cannot access sensitive financial data.</p>
+      </div>
+      <div class="ps-section">
+        <div class="ps-section-label"><span class="dot dot-blue"></span>Challenge</div>
+        <p>Build a Smolify-trained model ingesting structured financial fields (OCR-extracted) and outputting: <code>Clean / Suspicious / Fraudulent</code> with a reasoning trace. Model must learn Benford's Law patterns, vendor fuzzy duplicates, and date sequencing violations.</p>
+      </div>
+      <div class="ps-section">
+        <div class="ps-section-label"><span class="dot dot-green"></span>Evaluation Criteria</div>
+        <ul class="eval-list">
+          <li>Precision and Recall on a balanced fraud detection benchmark</li>
+          <li>Quality of reasoning trace (human-rated rubric)</li>
+          <li>False positive rate below 5% on clean document set</li>
+        </ul>
+      </div>
+      <div class="ps-section">
+        <div class="ps-section-label"><span class="dot dot-yellow"></span>Bonus</div>
+        <div class="bonus-row"><span class="bonus-icon">⚡</span><span class="bonus-text">Generate an audit-ready one-line explanation per flagged field</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PS 06 -->
+  <div class="ps-card intermediate">
+    <div class="ps-header">
+      <div class="ps-num">06</div>
+      <div class="ps-header-info">
+        <div class="ps-title">Multilingual Grievance Classifier for Government Portals</div>
+        <div class="ps-meta">
+          <!-- <span class="ps-tag tag-int">Intermediate</span> -->
+          <span class="ps-tag tag-track">Multi-label Classification</span>
+          <span class="ps-tag tag-domain">GovTech / Citizen Services</span>
+        </div>
+      </div>
+    </div>
+    <div class="ps-body">
+      <div class="ps-section">
+        <div class="ps-section-label"><span class="dot dot-red"></span>Problem</div>
+        <p>India's CPGRAMS portals receive millions of citizen complaints in Hindi, Tamil, Bengali, and Marathi. Manual classification into 20+ departments takes 3–7 days. Cloud LLMs cannot reliably handle Indic script code-mixing.</p>
+      </div>
+      <div class="ps-section">
+        <div class="ps-section-label"><span class="dot dot-blue"></span>Challenge</div>
+        <p>Use Smolify to synthesize a multilingual grievance dataset across 20+ categories. Train a compact classifier handling Devanagari, Tamil script, and Roman-transliterated Indic text. Output: <code>{ department, sub_category, urgency, sla_days }</code></p>
+      </div>
+      <div class="ps-section">
+        <div class="ps-section-label"><span class="dot dot-green"></span>Evaluation Criteria</div>
+        <ul class="eval-list">
+          <li>Macro-F1 across all 20+ departments on held-out multilingual test set</li>
+          <li>Performance parity across 4 languages (within 5% F1 gap)</li>
+          <li>Inference speed compatible with real-time portal submission</li>
+        </ul>
+      </div>
+      <div class="ps-section">
+        <div class="ps-section-label"><span class="dot dot-yellow"></span>Bonus</div>
+        <div class="bonus-row"><span class="bonus-icon">⚡</span><span class="bonus-text">Auto-detect language and script without an external language-ID model</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PS 07 -->
+  <div class="ps-card intermediate">
+    <div class="ps-header">
+      <div class="ps-num">07</div>
+      <div class="ps-header-info">
+        <div class="ps-title">Precision Agriculture Advisory Engine</div>
+        <div class="ps-meta">
+          <!-- <span class="ps-tag tag-int">Intermediate</span> -->
+          <span class="ps-tag tag-track">Conditional Recommendation</span>
+          <span class="ps-tag tag-domain">AgriTech / Rural India</span>
+        </div>
+      </div>
+    </div>
+    <div class="ps-body">
+      <div class="ps-section">
+        <div class="ps-section-label"><span class="dot dot-red"></span>Problem</div>
+        <p>Farmers in remote areas describe crop symptoms in local dialects (<code>"meri gehoon ki patti peeli pad rahi hai"</code>). General LLMs give verbose, irrelevant responses. Bandwidth is too limited for cloud inference on edge Android devices.</p>
+      </div>
+      <div class="ps-section">
+        <div class="ps-section-label"><span class="dot dot-blue"></span>Challenge</div>
+        <p>Train a Smolify SLM mapping symptom descriptions to structured recommendations: <code>{ disease, confidence, treatment, dosage, urgency }</code>. Works offline on mid-range Android. Handles Hinglish and regional dialect inputs.</p>
+      </div>
+      <div class="ps-section">
+        <div class="ps-section-label"><span class="dot dot-green"></span>Evaluation Criteria</div>
+        <ul class="eval-list">
+          <li>Accuracy on domain-expert-validated crop disease benchmark</li>
+          <li>Structured output schema compliance rate</li>
+          <li>Model size under 100MB for Android on-device deployment</li>
+        </ul>
+      </div>
+      <div class="ps-section">
+        <div class="ps-section-label"><span class="dot dot-yellow"></span>Bonus</div>
+        <div class="bonus-row"><span class="bonus-icon">⚡</span><span class="bonus-text">Integrate seasonal context (month + region) to improve recommendation specificity</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PS 08 -->
+  <div class="ps-card expert">
+    <div class="ps-header">
+      <div class="ps-num">08</div>
+      <div class="ps-header-info">
+        <div class="ps-title">Code Review Intelligence Distiller</div>
+        <div class="ps-meta">
+          <!-- <span class="ps-tag tag-exp">Expert</span> -->
+          <span class="ps-tag tag-track">Critique + Feedback Generation</span>
+          <span class="ps-tag tag-domain">DevTools / Engineering Productivity</span>
+        </div>
+      </div>
+    </div>
+    <div class="ps-body">
+      <div class="ps-section">
+        <div class="ps-section-label"><span class="dot dot-red"></span>Problem</div>
+        <p>Engineering teams spend 15–20% of dev time on code review. General LLMs produce inconsistent feedback and can't be fine-tuned to internal coding standards, security policies, or design patterns. Sending proprietary code to OpenAI/Gemini violates IP agreements.</p>
+      </div>
+      <div class="ps-section">
+        <div class="ps-section-label"><span class="dot dot-blue"></span>Challenge</div>
+        <p>Distill code review intelligence into a compact model trained on synthesized (code, review) pairs reflecting PEP8 + SOLID + OWASP Top-10. Output: <code>[{ line, severity, category, message, suggested_fix }]</code></p>
+      </div>
+      <div class="ps-section">
+        <div class="ps-section-label"><span class="dot dot-green"></span>Evaluation Criteria</div>
+        <ul class="eval-list">
+          <li>Review quality scored against expert human baseline (Likert scale)</li>
+          <li>Structured JSON output compliance rate</li>
+          <li>Coverage of OWASP Top-10 security anti-patterns in test snippets</li>
+        </ul>
+      </div>
+      <div class="ps-section">
+        <div class="ps-section-label"><span class="dot dot-yellow"></span>Bonus</div>
+        <div class="bonus-row"><span class="bonus-icon">⚡</span><span class="bonus-text">Allow a company's own past PR comments to be used as fine-tuning signal via Smolify</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PS 09 -->
+  <div class="ps-card intermediate">
+    <div class="ps-header">
+      <div class="ps-num">09</div>
+      <div class="ps-header-info">
+        <div class="ps-title">Real-Time Meeting Action Item Extractor</div>
+        <div class="ps-meta">
+          <!-- <span class="ps-tag tag-int">Intermediate</span> -->
+          <span class="ps-tag tag-track">Extraction + Summarization</span>
+          <span class="ps-tag tag-domain">Productivity / Enterprise</span>
+        </div>
+      </div>
+    </div>
+    <div class="ps-body">
+      <div class="ps-section">
+        <div class="ps-section-label"><span class="dot dot-red"></span>Problem</div>
+        <p>Enterprise meetings generate transcripts that are never acted upon. Action items and owners are buried in hours of text. Sending strategic meeting transcripts to cloud APIs violates corporate data policies. Existing summarizers produce prose blobs, not task lists.</p>
+      </div>
+      <div class="ps-section">
+        <div class="ps-section-label"><span class="dot dot-blue"></span>Challenge</div>
+        <p>Build a Smolify-trained model processing transcript chunks and outputting: <code>[{ action, owner, deadline, priority, context }]</code>. Handle indirect ownership (<code>"let's have the DevOps team handle this"</code>) and implicit deadlines (<code>"before next sprint"</code>).</p>
+      </div>
+      <div class="ps-section">
+        <div class="ps-section-label"><span class="dot dot-green"></span>Evaluation Criteria</div>
+        <ul class="eval-list">
+          <li>Action item recall and precision vs. human-annotated benchmark</li>
+          <li>Owner attribution accuracy</li>
+          <li>Implicit vs. explicit deadline normalization accuracy</li>
+        </ul>
+      </div>
+      <div class="ps-section">
+        <div class="ps-section-label"><span class="dot dot-yellow"></span>Bonus</div>
+        <div class="bonus-row"><span class="bonus-icon">⚡</span><span class="bonus-text">Classify action items by function: Engineering / Sales / Design / Management</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PS 10 -->
+  <div class="ps-card expert">
+    <div class="ps-header">
+      <div class="ps-num">10</div>
+      <div class="ps-header-info">
+        <div class="ps-title">Supply Chain Risk Signal Classifier</div>
+        <div class="ps-meta">
+          <!-- <span class="ps-tag tag-exp">Expert</span> -->
+          <span class="ps-tag tag-track">Event Detection + Classification</span>
+          <span class="ps-tag tag-domain">Supply Chain / Risk Management</span>
+        </div>
+      </div>
+    </div>
+    <div class="ps-body">
+      <div class="ps-section">
+        <div class="ps-section-label"><span class="dot dot-red"></span>Problem</div>
+        <p>Procurement teams need early warning signals from unstructured sources: supplier emails, shipping delays, port bulletins, news snippets. General LLMs can't reliably distinguish signal from noise in logistics-domain language at real-time alerting pipeline latency.</p>
+      </div>
+      <div class="ps-section">
+        <div class="ps-section-label"><span class="dot dot-blue"></span>Challenge</div>
+        <p>Train a Smolify model for classification + severity-scoring. Input: raw text snippet. Output: <code>{ event_type, severity: 1–5, affected_sku_category, recommended_action }</code>. Must integrate into a Kafka/webhook stream at under 100ms per classification.</p>
+      </div>
+      <div class="ps-section">
+        <div class="ps-section-label"><span class="dot dot-green"></span>Evaluation Criteria</div>
+        <ul class="eval-list">
+          <li>Event detection F1 on a logistics-domain held-out set</li>
+          <li>Severity calibration (rank correlation with expert severity labels)</li>
+          <li>Throughput benchmark: classifications per second in a streaming pipeline</li>
+        </ul>
+      </div>
+      <div class="ps-section">
+        <div class="ps-section-label"><span class="dot dot-yellow"></span>Bonus</div>
+        <div class="bonus-row"><span class="bonus-icon">⚡</span><span class="bonus-text">Build a minimal alert dashboard visualizing live risk signal classifications</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PS 11 - OPEN INNOVATION -->
+  <div class="ps-card open">
+    <div class="ps-header">
+      <div class="ps-num">11</div>
+      <div class="ps-header-info">
+        <div class="ps-title">Open Innovation Track — Build Your Own Sovereign AI Solution</div>
+        <div class="ps-meta">
+          <span class="ps-tag tag-open">Open Track</span>
+          <span class="ps-tag tag-track">Any Domain</span>
+          <span class="ps-tag tag-domain">Your Choice</span>
+        </div>
+      </div>
+    </div>
+    <div class="ps-body">
+      <div class="ps-section">
+        <div class="ps-section-label"><span class="dot dot-cyan"></span>Vision</div>
+        <p>The best ideas often come from the ground up. If you've identified a problem space where on-device AI can deliver real value — but it doesn't fit into our predefined tracks — this is your chance to prove it.</p>
+      </div>
+      <div class="ps-section">
+        <div class="ps-section-label"><span class="dot dot-purple"></span>Your Challenge</div>
+        <p>Define your own problem statement, build a Smolify-trained SLM that solves it, and demonstrate measurable impact. The core requirement remains unchanged: <code>own the weights, not the API key</code>. Your model must run entirely on-device or on-premise with zero dependency on cloud inference APIs.</p>
+      </div>
+      <div class="ps-section">
+        <div class="ps-section-label"><span class="dot dot-green"></span>Evaluation Criteria</div>
+        <ul class="eval-list">
+          <li>Problem relevance: Does it solve a real pain point for a defined user base?</li>
+          <li>Technical execution: Model quality, inference speed, and deployment feasibility</li>
+          <li>Innovation: Novelty of approach, domain, or integration method</li>
+          <li>Completeness: Working prototype with clear documentation and demo</li>
+        </ul>
+      </div>
+      <!-- <div class="ps-section">
+        <div class="ps-section-label"><span class="dot dot-yellow"></span>Examples to Inspire</div>
+        <div class="bonus-row"><span class="bonus-icon">💡</span><span class="bonus-text">Regional language OCR correction for government forms · Privacy-safe mental health chatbot for schools · Offline product recommendation engine for rural kirana stores · Real-time speech diarization for court proceedings · Custom safety classifier for social media moderation</span></div>
+      </div> -->
+      <div class="ps-section">
+        <div class="ps-section-label"><span class="dot dot-blue"></span>Requirements</div>
+        <p>Your submission must include: (1) A clear problem statement explaining the real-world use case, (2) A Smolify-trained model with documented training process, (3) A working demo/prototype showing the model in action.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- JUDGING -->
+  <div class="section-label">Judging Criteria</div>
+  <div class="terminal">
+    <div class="terminal-bar">
+      <div class="t-dot"></div><div class="t-dot"></div><div class="t-dot"></div>
+      <span class="terminal-title">judging.config.json</span>
+    </div>
+    <div class="terminal-body">
+      <div class="t-line"><span style="color:var(--text-dim)">{</span></div>
+      <div class="t-line"><span class="t-key" style="padding-left:20px">"utility"</span><span style="color:var(--text-dim)">: </span><span class="t-val">"40% — Does the model solve a real business problem?"</span></div>
+      <div class="t-line"><span class="t-key" style="padding-left:20px">"efficiency"</span><span style="color:var(--text-dim)">: </span><span class="t-val">"30% — Did you replace a massive generalist with your SLM?"</span></div>
+      <div class="t-line"><span class="t-key" style="padding-left:20px">"integration"</span><span style="color:var(--text-dim)">: </span><span class="t-val">"30% — How well is the model integrated into the final app?"</span></div>
+      <div class="t-line"><span style="color:var(--text-dim)">}</span></div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-brand">SMOLIFY.AI</div>
+    <div class="footer-links">
+      <a href="https://smolify.ai">smolify.ai</a> &nbsp;·&nbsp;
+      <a href="https://smolify.ai/docs/get-started">docs</a> &nbsp;·&nbsp;
+      <a href="https://twitter.com/smolifyai">@smolifyai</a>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>

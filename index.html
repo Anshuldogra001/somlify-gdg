@@ -415,33 +415,12 @@
     <div class="hero-badges">
       <span class="badge badge-green">48-hour Hackathon</span>
       <span class="badge badge-blue">GDG on Campus</span>
-      <span class="badge badge-yellow">₹1,00,000 Prize Pool</span>
-      <span class="badge badge-red">11 Problem Statements</span>
+      <span class="badge badge-yellow">₹10,000 Prize Pool</span>
       <span class="badge badge-cyan">SLM Track</span>
     </div>
   </header>
 
-  <!-- STATS -->
-  <!-- <div class="stats-grid">
-    <div class="stat-card">
-      <div class="stat-num" style="color: var(--g-green)">11</div>
-      <div class="stat-label">Problem Statements</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-num" style="color: var(--g-blue)">6</div>
-      <div class="stat-label">Intermediate</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-num" style="color: var(--g-red)">4</div>
-      <div class="stat-label">Expert Level</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-num" style="color: var(--g-yellow)">₹1L</div>
-      <div class="stat-label">Max Prize Pool</div>
-    </div>
-  </div> -->
 
-  <!-- TERMINAL -->
   <div class="terminal">
     <div class="terminal-bar">
       <div class="t-dot"></div><div class="t-dot"></div><div class="t-dot"></div>
@@ -460,15 +439,12 @@
 
   <!-- PROBLEM STATEMENTS -->
   <div class="section-label">Problem Statements</div>
-
-  <!-- PS 01 -->
   <div class="ps-card intermediate">
     <div class="ps-header">
       <div class="ps-num">01</div>
       <div class="ps-header-info">
         <div class="ps-title">Privacy-Preserving Contract Intelligence Engine</div>
         <div class="ps-meta">
-          <!-- <span class="ps-tag tag-int">Intermediate</span> -->
           <span class="ps-tag tag-track">NER + Structured Extraction</span>
           <span class="ps-tag tag-domain">LegalTech / Enterprise</span>
         </div>
@@ -498,14 +474,12 @@
     </div>
   </div>
 
-  <!-- PS 02 -->
   <div class="ps-card intermediate">
     <div class="ps-header">
       <div class="ps-num">02</div>
       <div class="ps-header-info">
         <div class="ps-title">Intelligent Clinical Symptom Router</div>
         <div class="ps-meta">
-          <!-- <span class="ps-tag tag-int">Intermediate</span> -->
           <span class="ps-tag tag-track">Classification</span>
           <span class="ps-tag tag-domain">HealthTech / Hospital Ops</span>
         </div>
@@ -524,7 +498,6 @@
         <div class="ps-section-label"><span class="dot dot-green"></span>Evaluation Criteria</div>
         <ul class="eval-list">
           <li>Top-1 and Top-3 accuracy on multi-department test set</li>
-          <li>Latency under 200ms on Raspberry Pi 4</li>
           <li>Graceful ambiguous input handling with confidence score output</li>
         </ul>
       </div>
@@ -534,89 +507,12 @@
       </div>
     </div>
   </div>
-
-  <!-- PS 03 -->
   <div class="ps-card expert">
     <div class="ps-header">
       <div class="ps-num">03</div>
       <div class="ps-header-info">
-        <div class="ps-title">COBOL-to-Python Migration Translator</div>
-        <div class="ps-meta">
-          <!-- <span class="ps-tag tag-exp">Expert</span> -->
-          <span class="ps-tag tag-track">Code Translation</span>
-          <span class="ps-tag tag-domain">FinTech / Legacy Modernization</span>
-        </div>
-      </div>
-    </div>
-    <div class="ps-body">
-      <div class="ps-section">
-        <div class="ps-section-label"><span class="dot dot-red"></span>Problem</div>
-        <p>Indian PSU banks run core banking on COBOL systems from the 1980s. General-purpose LLMs hallucinate COBOL-specific semantics (<code>COMPUTE</code>, <code>PERFORM UNTIL</code>, <code>COPYBOOKS</code>) and cannot be used with proprietary banking code.</p>
-      </div>
-      <div class="ps-section">
-        <div class="ps-section-label"><span class="dot dot-blue"></span>Challenge</div>
-        <p>Use Smolify to synthesize paired COBOL–Python datasets for financial computation patterns. Train a translation model producing syntactically correct, semantically equivalent Python that fully understands COBOL's fixed-format structure and data division blocks.</p>
-      </div>
-      <div class="ps-section">
-        <div class="ps-section-label"><span class="dot dot-green"></span>Evaluation Criteria</div>
-        <ul class="eval-list">
-          <li>Compilation success rate of all generated Python code</li>
-          <li>Semantic equivalence verified by unit test pass rate</li>
-          <li>Correct handling of: PICTURE clauses, PERFORM loops, COPYBOOKS</li>
-        </ul>
-      </div>
-      <div class="ps-section">
-        <div class="ps-section-label"><span class="dot dot-yellow"></span>Bonus</div>
-        <div class="bonus-row"><span class="bonus-icon">⚡</span><span class="bonus-text">Generate inline Python comments explaining the original COBOL logic</span></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- PS 04 -->
-  <div class="ps-card intermediate">
-    <div class="ps-header">
-      <div class="ps-num">04</div>
-      <div class="ps-header-info">
-        <div class="ps-title">Edge IoT Natural Language Commander</div>
-        <div class="ps-meta">
-          <!-- <span class="ps-tag tag-int">Intermediate</span> -->
-          <span class="ps-tag tag-track">Structured Output</span>
-          <span class="ps-tag tag-domain">Smart Home / Industrial IoT</span>
-        </div>
-      </div>
-    </div>
-    <div class="ps-body">
-      <div class="ps-section">
-        <div class="ps-section-label"><span class="dot dot-red"></span>Problem</div>
-        <p>Voice assistants require cloud connectivity and have 300–800ms latency. Industrial edge hardware (Raspberry Pi, ESP32) demands models under 50MB, with custom sensor vocabularies cloud APIs can't handle.</p>
-      </div>
-      <div class="ps-section">
-        <div class="ps-section-label"><span class="dot dot-blue"></span>Challenge</div>
-        <p>Train a Smolify model converting natural language commands into deterministic JSON payloads. Handle negation, relative values (<code>"dim by 30%"</code>), multi-device commands, and unknown device fallbacks — producing zero hallucinated keys.</p>
-      </div>
-      <div class="ps-section">
-        <div class="ps-section-label"><span class="dot dot-green"></span>Evaluation Criteria</div>
-        <ul class="eval-list">
-          <li>JSON schema validity rate (must be 100% parseable)</li>
-          <li>Exact-match accuracy on command-to-JSON benchmark</li>
-          <li>Model size under 80MB for edge deployment</li>
-        </ul>
-      </div>
-      <div class="ps-section">
-        <div class="ps-section-label"><span class="dot dot-yellow"></span>Bonus</div>
-        <div class="bonus-row"><span class="bonus-icon">⚡</span><span class="bonus-text">Support custom device vocabulary via a config YAML at inference time</span></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- PS 05 -->
-  <div class="ps-card expert">
-    <div class="ps-header">
-      <div class="ps-num">05</div>
-      <div class="ps-header-info">
         <div class="ps-title">Financial Document Anomaly Detector</div>
         <div class="ps-meta">
-          <!-- <span class="ps-tag tag-exp">Expert</span> -->
           <span class="ps-tag tag-track">Classification + Reasoning</span>
           <span class="ps-tag tag-domain">FinTech / Audit / Compliance</span>
         </div>
@@ -646,125 +542,12 @@
     </div>
   </div>
 
-  <!-- PS 06 -->
   <div class="ps-card intermediate">
     <div class="ps-header">
-      <div class="ps-num">06</div>
-      <div class="ps-header-info">
-        <div class="ps-title">Multilingual Grievance Classifier for Government Portals</div>
-        <div class="ps-meta">
-          <!-- <span class="ps-tag tag-int">Intermediate</span> -->
-          <span class="ps-tag tag-track">Multi-label Classification</span>
-          <span class="ps-tag tag-domain">GovTech / Citizen Services</span>
-        </div>
-      </div>
-    </div>
-    <div class="ps-body">
-      <div class="ps-section">
-        <div class="ps-section-label"><span class="dot dot-red"></span>Problem</div>
-        <p>India's CPGRAMS portals receive millions of citizen complaints in Hindi, Tamil, Bengali, and Marathi. Manual classification into 20+ departments takes 3–7 days. Cloud LLMs cannot reliably handle Indic script code-mixing.</p>
-      </div>
-      <div class="ps-section">
-        <div class="ps-section-label"><span class="dot dot-blue"></span>Challenge</div>
-        <p>Use Smolify to synthesize a multilingual grievance dataset across 20+ categories. Train a compact classifier handling Devanagari, Tamil script, and Roman-transliterated Indic text. Output: <code>{ department, sub_category, urgency, sla_days }</code></p>
-      </div>
-      <div class="ps-section">
-        <div class="ps-section-label"><span class="dot dot-green"></span>Evaluation Criteria</div>
-        <ul class="eval-list">
-          <li>Macro-F1 across all 20+ departments on held-out multilingual test set</li>
-          <li>Performance parity across 4 languages (within 5% F1 gap)</li>
-          <li>Inference speed compatible with real-time portal submission</li>
-        </ul>
-      </div>
-      <div class="ps-section">
-        <div class="ps-section-label"><span class="dot dot-yellow"></span>Bonus</div>
-        <div class="bonus-row"><span class="bonus-icon">⚡</span><span class="bonus-text">Auto-detect language and script without an external language-ID model</span></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- PS 07 -->
-  <div class="ps-card intermediate">
-    <div class="ps-header">
-      <div class="ps-num">07</div>
-      <div class="ps-header-info">
-        <div class="ps-title">Precision Agriculture Advisory Engine</div>
-        <div class="ps-meta">
-          <!-- <span class="ps-tag tag-int">Intermediate</span> -->
-          <span class="ps-tag tag-track">Conditional Recommendation</span>
-          <span class="ps-tag tag-domain">AgriTech / Rural India</span>
-        </div>
-      </div>
-    </div>
-    <div class="ps-body">
-      <div class="ps-section">
-        <div class="ps-section-label"><span class="dot dot-red"></span>Problem</div>
-        <p>Farmers in remote areas describe crop symptoms in local dialects (<code>"meri gehoon ki patti peeli pad rahi hai"</code>). General LLMs give verbose, irrelevant responses. Bandwidth is too limited for cloud inference on edge Android devices.</p>
-      </div>
-      <div class="ps-section">
-        <div class="ps-section-label"><span class="dot dot-blue"></span>Challenge</div>
-        <p>Train a Smolify SLM mapping symptom descriptions to structured recommendations: <code>{ disease, confidence, treatment, dosage, urgency }</code>. Works offline on mid-range Android. Handles Hinglish and regional dialect inputs.</p>
-      </div>
-      <div class="ps-section">
-        <div class="ps-section-label"><span class="dot dot-green"></span>Evaluation Criteria</div>
-        <ul class="eval-list">
-          <li>Accuracy on domain-expert-validated crop disease benchmark</li>
-          <li>Structured output schema compliance rate</li>
-          <li>Model size under 100MB for Android on-device deployment</li>
-        </ul>
-      </div>
-      <div class="ps-section">
-        <div class="ps-section-label"><span class="dot dot-yellow"></span>Bonus</div>
-        <div class="bonus-row"><span class="bonus-icon">⚡</span><span class="bonus-text">Integrate seasonal context (month + region) to improve recommendation specificity</span></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- PS 08 -->
-  <div class="ps-card expert">
-    <div class="ps-header">
-      <div class="ps-num">08</div>
-      <div class="ps-header-info">
-        <div class="ps-title">Code Review Intelligence Distiller</div>
-        <div class="ps-meta">
-          <!-- <span class="ps-tag tag-exp">Expert</span> -->
-          <span class="ps-tag tag-track">Critique + Feedback Generation</span>
-          <span class="ps-tag tag-domain">DevTools / Engineering Productivity</span>
-        </div>
-      </div>
-    </div>
-    <div class="ps-body">
-      <div class="ps-section">
-        <div class="ps-section-label"><span class="dot dot-red"></span>Problem</div>
-        <p>Engineering teams spend 15–20% of dev time on code review. General LLMs produce inconsistent feedback and can't be fine-tuned to internal coding standards, security policies, or design patterns. Sending proprietary code to OpenAI/Gemini violates IP agreements.</p>
-      </div>
-      <div class="ps-section">
-        <div class="ps-section-label"><span class="dot dot-blue"></span>Challenge</div>
-        <p>Distill code review intelligence into a compact model trained on synthesized (code, review) pairs reflecting PEP8 + SOLID + OWASP Top-10. Output: <code>[{ line, severity, category, message, suggested_fix }]</code></p>
-      </div>
-      <div class="ps-section">
-        <div class="ps-section-label"><span class="dot dot-green"></span>Evaluation Criteria</div>
-        <ul class="eval-list">
-          <li>Review quality scored against expert human baseline (Likert scale)</li>
-          <li>Structured JSON output compliance rate</li>
-          <li>Coverage of OWASP Top-10 security anti-patterns in test snippets</li>
-        </ul>
-      </div>
-      <div class="ps-section">
-        <div class="ps-section-label"><span class="dot dot-yellow"></span>Bonus</div>
-        <div class="bonus-row"><span class="bonus-icon">⚡</span><span class="bonus-text">Allow a company's own past PR comments to be used as fine-tuning signal via Smolify</span></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- PS 09 -->
-  <div class="ps-card intermediate">
-    <div class="ps-header">
-      <div class="ps-num">09</div>
+      <div class="ps-num">04</div>
       <div class="ps-header-info">
         <div class="ps-title">Real-Time Meeting Action Item Extractor</div>
         <div class="ps-meta">
-          <!-- <span class="ps-tag tag-int">Intermediate</span> -->
           <span class="ps-tag tag-track">Extraction + Summarization</span>
           <span class="ps-tag tag-domain">Productivity / Enterprise</span>
         </div>
@@ -794,47 +577,9 @@
     </div>
   </div>
 
-  <!-- PS 10 -->
-  <div class="ps-card expert">
-    <div class="ps-header">
-      <div class="ps-num">10</div>
-      <div class="ps-header-info">
-        <div class="ps-title">Supply Chain Risk Signal Classifier</div>
-        <div class="ps-meta">
-          <!-- <span class="ps-tag tag-exp">Expert</span> -->
-          <span class="ps-tag tag-track">Event Detection + Classification</span>
-          <span class="ps-tag tag-domain">Supply Chain / Risk Management</span>
-        </div>
-      </div>
-    </div>
-    <div class="ps-body">
-      <div class="ps-section">
-        <div class="ps-section-label"><span class="dot dot-red"></span>Problem</div>
-        <p>Procurement teams need early warning signals from unstructured sources: supplier emails, shipping delays, port bulletins, news snippets. General LLMs can't reliably distinguish signal from noise in logistics-domain language at real-time alerting pipeline latency.</p>
-      </div>
-      <div class="ps-section">
-        <div class="ps-section-label"><span class="dot dot-blue"></span>Challenge</div>
-        <p>Train a Smolify model for classification + severity-scoring. Input: raw text snippet. Output: <code>{ event_type, severity: 1–5, affected_sku_category, recommended_action }</code>. Must integrate into a Kafka/webhook stream at under 100ms per classification.</p>
-      </div>
-      <div class="ps-section">
-        <div class="ps-section-label"><span class="dot dot-green"></span>Evaluation Criteria</div>
-        <ul class="eval-list">
-          <li>Event detection F1 on a logistics-domain held-out set</li>
-          <li>Severity calibration (rank correlation with expert severity labels)</li>
-          <li>Throughput benchmark: classifications per second in a streaming pipeline</li>
-        </ul>
-      </div>
-      <div class="ps-section">
-        <div class="ps-section-label"><span class="dot dot-yellow"></span>Bonus</div>
-        <div class="bonus-row"><span class="bonus-icon">⚡</span><span class="bonus-text">Build a minimal alert dashboard visualizing live risk signal classifications</span></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- PS 11 - OPEN INNOVATION -->
   <div class="ps-card open">
     <div class="ps-header">
-      <div class="ps-num">11</div>
+      <div class="ps-num">05</div>
       <div class="ps-header-info">
         <div class="ps-title">Open Innovation Track — Build Your Own Sovereign AI Solution</div>
         <div class="ps-meta">
@@ -862,10 +607,6 @@
           <li>Completeness: Working prototype with clear documentation and demo</li>
         </ul>
       </div>
-      <!-- <div class="ps-section">
-        <div class="ps-section-label"><span class="dot dot-yellow"></span>Examples to Inspire</div>
-        <div class="bonus-row"><span class="bonus-icon">💡</span><span class="bonus-text">Regional language OCR correction for government forms · Privacy-safe mental health chatbot for schools · Offline product recommendation engine for rural kirana stores · Real-time speech diarization for court proceedings · Custom safety classifier for social media moderation</span></div>
-      </div> -->
       <div class="ps-section">
         <div class="ps-section-label"><span class="dot dot-blue"></span>Requirements</div>
         <p>Your submission must include: (1) A clear problem statement explaining the real-world use case, (2) A Smolify-trained model with documented training process, (3) A working demo/prototype showing the model in action.</p>
